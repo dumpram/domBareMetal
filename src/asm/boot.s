@@ -1,5 +1,5 @@
-#include "stack.s"
-#include "bss.s"
+#include "asm/stack.s"
+#include "asm/bss.s"
 
     .section ".start", "x"
     .align
@@ -23,25 +23,23 @@ setup:
     @ Install exception vector table address
     ldr    r0, =exception_vector_table
     mcr    p15, 0, r0, c12, c0, 0
-    
+
 
     cpsid  i            @ Disable interrupts
-    
-    mov r12, #18        @ 18 is console_io identifier
-	mov r0, #0          @ 0 is write
-	mov r1, #5          @ message length
-	ldr r2, =msg        @ address of hello message
-	.long 0xe140ea71    @ hvc 
+
+    @ Greeting message from boot.s
+    mov r0, #0
+    mov r1, #45
+    ldr r2, =msg
+    bl HYPERVISOR_console_io
 
 __main:
     ldr lr,=__exit      @ go to exit after main
     b main
-    
+
 __exit:
     b   .
-    
+
 .align 4
 msg:
-    .asciz "hello"
-    
-
+    .asciz ">> Booting bare metal Xen application... <<\n"
