@@ -23,7 +23,8 @@ int main () {
     __asm("mov r10, #100");
 
     // Set direction of GPA2.4 configuration register as out.
-    *(gpio + (GPIOA_CONT_OFFS >> 2)) |= (0x1 << 16);
+    *(gpio + (GPIOA_CONT_OFFS >> 2)) &= ~(0xF << 16); // reset old configuration
+    *(gpio + (GPIOA_CONT_OFFS >> 2)) |= (0x1 << 16); // configure as output
 
     while (1367) {
         /** We are stuck in while loop **/

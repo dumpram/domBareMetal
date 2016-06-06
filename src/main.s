@@ -39,6 +39,13 @@ main:
 	ldr	r2, [fp, #-12]
 	add	r2, r2, #64
 	ldr	r2, [r2]
+	bic	r2, r2, #983040
+	str	r2, [r3]
+	ldr	r3, [fp, #-12]
+	add	r3, r3, #64
+	ldr	r2, [fp, #-12]
+	add	r2, r2, #64
+	ldr	r2, [r2]
 	orr	r2, r2, #65536
 	str	r2, [r3]
 .L6:
@@ -46,7 +53,7 @@ main:
 	str	r3, [fp, #-8]
 	b	.L2
 .L3:
-@ 31 "src/main.c" 1
+@ 32 "src/main.c" 1
 	mov r9, #100
 @ 0 "" 2
 	ldr	r3, [fp, #-8]
@@ -68,7 +75,7 @@ main:
 	str	r3, [fp, #-8]
 	b	.L4
 .L5:
-@ 37 "src/main.c" 1
+@ 38 "src/main.c" 1
 	mov r9, #100
 @ 0 "" 2
 	ldr	r3, [fp, #-8]
