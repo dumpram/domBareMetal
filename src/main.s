@@ -25,40 +25,73 @@ main:
 	stmfd	sp!, {fp, lr}
 	add	fp, sp, #4
 	sub	sp, sp, #8
-	ldr	r3, .L3
-	str	r3, [fp, #-8]
-	ldr	r2, .L3+4
+	ldr	r3, .L7
+	str	r3, [fp, #-12]
+	ldr	r2, .L7+4
 	mov	r1, #32
 	mov	r0, #0
 	bl	HYPERVISOR_console_io
-@ 21 "src/main.c" 1
+@ 23 "src/main.c" 1
 	mov r10, #100
 @ 0 "" 2
-	ldr	r3, [fp, #-8]
-	add	r3, r3, #3104
-	ldr	r2, [fp, #-8]
-	add	r2, r2, #3104
+	ldr	r3, [fp, #-12]
+	add	r3, r3, #64
+	ldr	r2, [fp, #-12]
+	add	r2, r2, #64
 	ldr	r2, [r2]
-	orr	r2, r2, #256
+	orr	r2, r2, #65536
 	str	r2, [r3]
-.L2:
-@ 28 "src/main.c" 1
+.L6:
+	mov	r3, #0
+	str	r3, [fp, #-8]
+	b	.L2
+.L3:
+@ 31 "src/main.c" 1
 	mov r9, #100
 @ 0 "" 2
 	ldr	r3, [fp, #-8]
-	add	r3, r3, #3104
-	add	r3, r3, #4
-	ldr	r2, [fp, #-8]
-	add	r2, r2, #3104
-	add	r2, r2, #4
+	add	r3, r3, #1
+	str	r3, [fp, #-8]
+.L2:
+	ldr	r3, [fp, #-8]
+	ldr	r2, .L7+8
+	cmp	r3, r2
+	ble	.L3
+	ldr	r3, [fp, #-12]
+	add	r3, r3, #68
+	ldr	r2, [fp, #-12]
+	add	r2, r2, #68
 	ldr	r2, [r2]
-	orr	r2, r2, #4
+	orr	r2, r2, #16
 	str	r2, [r3]
-	b	.L2
+	mov	r3, #0
+	str	r3, [fp, #-8]
+	b	.L4
+.L5:
+@ 37 "src/main.c" 1
+	mov r9, #100
+@ 0 "" 2
+	ldr	r3, [fp, #-8]
+	add	r3, r3, #1
+	str	r3, [fp, #-8]
 .L4:
+	ldr	r3, [fp, #-8]
+	ldr	r2, .L7+8
+	cmp	r3, r2
+	ble	.L5
+	ldr	r3, [fp, #-12]
+	add	r3, r3, #68
+	ldr	r2, [fp, #-12]
+	add	r2, r2, #68
+	ldr	r2, [r2]
+	bic	r2, r2, #16
+	str	r2, [r3]
+	b	.L6
+.L8:
 	.align	2
-.L3:
+.L7:
 	.word	1094713344
 	.word	.LC0
+	.word	9999999
 	.size	main, .-main
 	.ident	"GCC: (crosstool-NG linaro-1.13.1-4.9-2014.09 - Linaro GCC 4.9-2014.09) 4.9.2 20140904 (prerelease)"
